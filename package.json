@@ -1,0 +1,25 @@
+{
+  "name": "orangehrm",
+  "version": "1.0.0",
+  "description": "\"# orangehrm-playwright-automation\"",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thivya-AutomationTester/orangehrm-playwright-automation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Thivya-AutomationTester/orangehrm-playwright-automation/issues"
+  },
+  "homepage": "https://github.com/Thivya-AutomationTester/orangehrm-playwright-automation#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.2.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
+  }
+}
