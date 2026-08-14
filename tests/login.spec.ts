@@ -1,21 +1,20 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
+import { test } from '../fixtures/testFixtures';
 import { loginData } from '../test-data/loginData';
+import * as helpers from '../utils/playwrightHelpers'
 
-test('OrangeHRM login page', async ({ page }) => {
-  const loginPage = new LoginPage(page);
+test('login with valid credentials', async ({ page, loginPage }) => {
+
   await loginPage.navigateToLoginPage();
-  await expect(page).toHaveTitle(/OrangeHRM/);
+  await helpers.assertTitle(page, /OrangeHRM/);
   await loginPage.login(loginData.valid.username, loginData.valid.password);
-  await expect(page).toHaveURL(/dashboard/);
+  await helpers.assertURL(page, /dashboard/);
 });
 for (const scenario of loginData.invalidScenarios) {
-  test(`login fails with ${scenario.name}`, async ({ page }) => {
-    const loginPage = new LoginPage(page);
+  test(`login fails with ${scenario.name}`, async ({ page, loginPage }) => {
     await loginPage.navigateToLoginPage();
-    await expect(page).toHaveTitle(/OrangeHRM/);
+    await helpers.assertTitle(page, /OrangeHRM/);
     await loginPage.login(scenario.username, scenario.password);
-    await expect(loginPage.getErrorMessage()).toBeVisible();
-    await expect(loginPage.getErrorMessage()).toContainText('Invalid credentials');
+    await helpers.assertVisible(loginPage.getErrorMessage());
+    await helpers.assertContainsText(loginPage.getErrorMessage(), 'Invalid credentials');
   });
 }
