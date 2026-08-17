@@ -1,6 +1,4 @@
-import { Page, Locator } from '@playwright/test';
-import * as helpers from '../utils/playwrightHelpers';
-
+import { Page, Locator } from '@playwright/test'
 
 export class LoginPage {
 
@@ -19,9 +17,9 @@ export class LoginPage {
         await this.page.goto('/');
     }
     async login(username: string, password: string) {
-        await helpers.fillInput(this.usernameInput, username);
-        await helpers.fillInput(this.passwordInput, password);
-        await helpers.clickElement(this.loginButton);
+        await this.usernameInput.fill(username);
+        await this.passwordInput.fill(password);
+        await this.loginButton.click();
     }
     getErrorMessage(): Locator {
         return this.errorMessage;

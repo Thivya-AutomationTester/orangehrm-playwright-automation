@@ -16,4 +16,6 @@ export const env = {
     url: getEnvVariable('ORANGEHRM_URL'),
     username: getEnvVariable('ORANGEHRM_USERNAME'),
     password: getEnvVariable('ORANGEHRM_PASSWORD'),
+    browser: getEnvVariable('BROWSER')
+
 };

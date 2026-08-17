@@ -1,20 +1,27 @@
-import { test } from '../fixtures/testFixtures';
-import { loginData } from '../test-data/loginData';
-import * as helpers from '../utils/playwrightHelpers'
+import { test } from '../fixtures/test-fixtures';
+import { expect } from '@playwright/test'
+import { loginData } from '../test-data/login-data';
 
+test.use({
+  storageState: {
+    cookies: [],
+    origins: [],
+  },
+});
 test('login with valid credentials', async ({ page, loginPage }) => {
 
   await loginPage.navigateToLoginPage();
-  await helpers.assertTitle(page, /OrangeHRM/);
+  await expect(page).toHaveTitle(/OrangeHRM/)
   await loginPage.login(loginData.valid.username, loginData.valid.password);
-  await helpers.assertURL(page, /dashboard/);
+  await expect(page).toHaveURL(/dashboard/);
 });
 for (const scenario of loginData.invalidScenarios) {
   test(`login fails with ${scenario.name}`, async ({ page, loginPage }) => {
     await loginPage.navigateToLoginPage();
-    await helpers.assertTitle(page, /OrangeHRM/);
+    await expect(page).toHaveTitle(/OrangeHRM/)
     await loginPage.login(scenario.username, scenario.password);
-    await helpers.assertVisible(loginPage.getErrorMessage());
-    await helpers.assertContainsText(loginPage.getErrorMessage(), 'Invalid credentials');
+    await expect(loginPage.getErrorMessage()).toBeVisible();
+    await expect(loginPage.getErrorMessage()).toContainText('Invalid credentials');
+
   });
 }

@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
 import { env } from './config/env';
 
 export default defineConfig({
@@ -12,60 +12,53 @@ export default defineConfig({
   expect: {
     timeout: 15 * 1000,
   },
+  globalSetup: './setup/global-setup.ts',
+  globalTeardown: './teardown/global-teardown.ts',
+
   use: {
 
     baseURL: env.url,
-    trace: 'on-first-retry',
+    trace: 'on-first-retry'
 
 
   },
 
   /* Configure projects for major browsers */
   projects: [
+
     {
       name: 'chromium',
       use: {
-        ...devices['Desktop Chrome'],
+        browserName: 'chromium',
+        viewport: null,
+        launchOptions: {
+          args: ['--start-maximized']
+        },
+        storageState: 'playwright/auth/chromium.json',
 
       },
 
+
     },
+
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: {
+        browserName: 'firefox',
+        storageState: 'playwright/auth/firefox.json',
+      },
     },
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: {
+        browserName: 'webkit',
+        storageState: 'playwright/auth/webkit.json',
+      },
     },
 
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
   ],
 
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
+
 });
