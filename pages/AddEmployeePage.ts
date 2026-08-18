@@ -7,9 +7,8 @@ export interface EmployeeData {
     password: string;
 }
 
-export class EmployeePage {
-    private readonly pimPage: Locator;
-    private readonly addButton: Locator;
+export class AddEmployeePage {
+
     private readonly firstName: Locator;
     private readonly middleName: Locator;
     private readonly lastName: Locator;
@@ -19,12 +18,10 @@ export class EmployeePage {
     private readonly loginConfirmPassword: Locator;
     private readonly loginSaveButton: Locator;
     private readonly successToastMessage: Locator;
-    private readonly employeeList: Locator;
 
 
     constructor(private page: Page) {
-        this.pimPage = this.page.getByText('PIM');
-        this.addButton = this.page.getByRole('button', { name: 'Add' });
+
         this.firstName = this.page.getByPlaceholder('First Name');
         this.middleName = this.page.getByPlaceholder('Middle Name');
         this.lastName = this.page.getByPlaceholder('Last Name');
@@ -34,19 +31,7 @@ export class EmployeePage {
         this.loginConfirmPassword = this.page.locator("//label[text()='Confirm Password']/parent::div/following-sibling::div/input");
         this.loginSaveButton = this.page.getByRole('button', { name: 'Save' });
         this.successToastMessage = this.page.getByText('Successfully Saved');
-        this.employeeList = this.page.getByRole('link', { name: 'Employee List' });
-    }
-    async navigateToPIMPage() {
-        await this.pimPage.click();
-    }
-    async navigateToDashboardPage() {
-        await this.page.goto("/web/index.php/dashboard/index");
-    }
-    async navigateToAddEmployeePage() {
-        await this.addButton.click();
-    }
-    async navigateToEmployeeList() {
-        await this.employeeList.click();
+
     }
 
     async addEmployeeWithLogin(employee: EmployeeData) {
@@ -63,5 +48,6 @@ export class EmployeePage {
     getSuccessMessage(): Locator {
         return this.successToastMessage;
     }
+
 
 }
